@@ -54,7 +54,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'magazine_gusht.urls'
 
-AUTH_USER_MODEL = 'user.User'
+# AUTH_USER_MODEL = 'user.User'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

@@ -1,9 +1,15 @@
-from rest_framework.serializers import Serializer
+from rest_framework import serializers
 
-from user.models import User
+from user.models import User, Merchant
 
 
-class UserSignUpSerializer(Serializer):  # noqa
+class UserListSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
+        fields = '__all__'
+
+
+class MerchantListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Merchant
         fields = '__all__'

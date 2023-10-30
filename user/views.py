@@ -1,11 +1,17 @@
 from django.shortcuts import render
-from rest_framework.generics import CreateAPIView, ListCreateAPIView
+from rest_framework.generics import CreateAPIView, ListCreateAPIView, ListAPIView
 
-from user.models import User
-from user.serializers import UserSignUpSerializer
+from user.models import User, Merchant
+from user.serializers import UserListSerializer, MerchantListSerializer
 
 
-class CreateUserView(ListCreateAPIView):
+class UserListApiView(ListAPIView):
     queryset = User.objects.all()
-    serializer_class = UserSignUpSerializer
+    serializer_class = UserListSerializer
+    # permission_classes = (permissions.AllowAny, )
+
+
+class MerchantListApiView(ListAPIView):
+    queryset = Merchant.objects.all()
+    serializer_class = MerchantListSerializer
     # permission_classes = (permissions.AllowAny, )

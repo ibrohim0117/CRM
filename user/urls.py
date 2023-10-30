@@ -1,7 +1,8 @@
 from django.urls import path
 
-from user.views import CreateUserView
+from user.views import UserListApiView, MerchantListApiView
 
 urlpatterns = [
-    path('singup/', CreateUserView.as_view())
+    path('user/', UserListApiView.as_view()),
+    path('merchant/', MerchantListApiView.as_view()),
 ]
