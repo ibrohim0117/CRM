@@ -52,7 +52,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'magazine_gusht.urls'
+ROOT_URLCONF = 'root.urls'
 
 # AUTH_USER_MODEL = 'user.User'
 TEMPLATES = [
