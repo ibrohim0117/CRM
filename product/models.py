@@ -8,6 +8,9 @@ class Product(models.Model):
     description = models.TextField(null=True, blank=True)
     price = models.DecimalField(max_digits=10000000, decimal_places=2)
 
+    def __str__(self):
+        return self.title
+
 
 class Quantity(models.Model):
     AMOUNT = (
@@ -19,3 +22,6 @@ class Quantity(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
     amount = models.IntegerField(choices=AMOUNT)
+
+    def __str__(self):
+        return self.product.title
