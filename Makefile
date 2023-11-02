@@ -1,6 +1,6 @@
 mig:
-	python manage.py makemigrations
-	python manage.py migrate
+	python manage.py makemigrations app
+	python manage.py migrate app
 
 run:
 	python manage.py runserver
