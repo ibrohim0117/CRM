@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView
 
 from app.models import Account, Order, Payment
 from app.serializers import AccountSerializers, OrderSerializers, PaymentSerializers
@@ -18,3 +18,8 @@ class PaymentListView(ListAPIView):
 class OrderListView(ListAPIView):
     queryset = Payment.objects.all()
     serializer_class = OrderSerializers
+
+
+class AccountCreatView(CreateAPIView):
+    queryset = Account.objects.all()
+    serializer_class = AccountSerializers
