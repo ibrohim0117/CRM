@@ -13,6 +13,7 @@ class UserModel(models.Model):
         (1, 'Paid'),
     )
 
+
     status = models.IntegerField(choices=STATUS)
     full_name = models.CharField(max_length=120)
     phone_number = models.CharField(max_length=13, unique=True)
