@@ -22,6 +22,9 @@ class UserModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return self.full_name
+
 
 class ClientModel(models.Model):
     STATUS = (
@@ -39,6 +42,9 @@ class ClientModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return self.full_name
+
 
 class MagazineModel(models.Model):
     owner = models.ForeignKey(UserModel, on_delete=models.CASCADE)
@@ -46,6 +52,9 @@ class MagazineModel(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.name} --> {self.owner.full_name}"
 
 
 class OrderModel(models.Model):
@@ -58,6 +67,9 @@ class OrderModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return f"{self.description} --> {self.client.full_name} --> {self.magazine.name}"
+
 
 class PaymentModel(models.Model):
     client = models.ForeignKey(UserModel, on_delete=models.CASCADE)
@@ -67,4 +79,7 @@ class PaymentModel(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.client.full_name} --> {self.amount}"
 
