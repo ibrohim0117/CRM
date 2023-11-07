@@ -20,7 +20,7 @@ class UserModel(models.Model):
     password = models.CharField(max_length=255)
 
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 
 class ClientModel(models.Model):
@@ -33,11 +33,11 @@ class ClientModel(models.Model):
     status = models.IntegerField(choices=STATUS)
     full_name = models.CharField(max_length=120)
     phone_number1 = models.CharField(max_length=13, unique=True)
-    phone_number2 = models.CharField(max_length=13)
+    phone_number2 = models.CharField(max_length=13, blank=True, null=True)
     debt_amount = models.FloatField(default=0)
 
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 
 class MagazineModel(models.Model):
@@ -45,7 +45,7 @@ class MagazineModel(models.Model):
     name = models.CharField(max_length=120)
 
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 
 class OrderModel(models.Model):
@@ -53,10 +53,10 @@ class OrderModel(models.Model):
     magazine = models.ForeignKey(MagazineModel, models.CASCADE)
     amount = models.FloatField()
     description = models.TextField()
-    expire_date = models.DateTimeField()
+    expire_date = models.DateField()
 
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 
 class PaymentModel(models.Model):
@@ -66,5 +66,5 @@ class PaymentModel(models.Model):
     description = models.FloatField(null=True, blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
