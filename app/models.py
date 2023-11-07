@@ -1,44 +1,70 @@
 from django.db import models
 
 
-class Account(models.Model):
+class UserModel(models.Model):
     ROLE = (
-        (0, 'Merchant'),
-        (1, 'Client'),
+        (0, 'Superuser'),
+        (1, 'Admin'),
+        (2, 'Customer')
     )
+
     STATUS = (
         (0, 'Debtor'),
         (1, 'Paid'),
     )
-    full_name = models.CharField(max_length=221)
-    role = models.IntegerField(choices=ROLE)
-    bill = models.DecimalField(max_digits=1000000, decimal_places=2, null=True, blank=True)
-    phone_number = models.CharField(max_length=221)
-    extra_phone_number = models.CharField(max_length=221, null=True, blank=True)
+
     status = models.IntegerField(choices=STATUS)
-    created_date = models.DateField(auto_now_add=True)
+    full_name = models.CharField(max_length=120)
+    phone_number = models.CharField(max_length=13, unique=True)
 
-    def __str__(self):
-        return self.full_name
+    password = models.CharField(max_length=255)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_add=True)
 
 
-class Order(models.Model):
-    merchant = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='merchant')
-    client = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='client')
+class ClientModel(models.Model):
+    STATUS = (
+        (0, 'Debtor'),
+        (1, 'Paid'),
+        (3, 'Pending')
+    )
+
+    status = models.IntegerField(choices=STATUS)
+    full_name = models.CharField(max_length=120)
+    phone_number1 = models.CharField(max_length=13, unique=True)
+    phone_number2 = models.CharField(max_length=13)
+    debt_amount = models.FloatField(default=0)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_add=True)
+
+
+class MagazineModel(models.Model):
+    owner = models.ForeignKey(UserModel, on_delete=models.CASCADE)
+    name = models.CharField(max_length=120)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_add=True)
+
+
+class OrderModel(models.Model):
+    client = models.ForeignKey(UserModel, models.CASCADE)
+    magazine = models.ForeignKey(MagazineModel, models.CASCADE)
+    amount = models.FloatField()
     description = models.TextField()
-    price = models.DecimalField(max_digits=1000000, decimal_places=2)
-    expire_date = models.DateField()
-    created_date = models.DateTimeField(auto_now_add=True)
+    expire_date = models.DateTimeField()
 
-    def __str__(self):
-        return self.description
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_add=True)
 
 
-class Payment(models.Model):
-    client_merchant = models.ForeignKey(Account, on_delete=models.SET_NULL, null=True, blank=True, related_name='client_merchant')
-    client_client = models.ForeignKey(Account, on_delete=models.SET_NULL, null=True, blank=True, related_name='client_client')
-    price = models.DecimalField(max_digits=1000000, decimal_places=2)
-    created_date = models.DateTimeField(auto_now_add=True)
+class PaymentModel(models.Model):
+    client = models.ForeignKey(UserModel, on_delete=models.CASCADE)
+    magazine = models.ForeignKey(MagazineModel, on_delete=models.CASCADE)
+    amount = models.FloatField()
+    description = models.FloatField(null=True, blank=True)
 
-    def __str__(self):
-        return self.client_client.full_name
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_add=True)
+

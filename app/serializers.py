@@ -33,7 +33,6 @@ class AccountSerializers(serializers.ModelSerializer):
         return attrs
 
 
-
 class PaymentSerializers(serializers.ModelSerializer):
     class Meta:
         model = Payment
