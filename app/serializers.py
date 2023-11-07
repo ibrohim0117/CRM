@@ -1,12 +1,12 @@
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
-from app.models import Account, Payment, Order
+from app.models import UserModel, ClientModel, MagazineModel, OrderModel, PaymentModel
 
 
-class AccountSerializers(serializers.ModelSerializer):
+class UserSerializers(serializers.ModelSerializer):
     class Meta:
-        model = Account
+        model = UserModel
         fields = '__all__'
 
     def validate(self, attrs):
@@ -22,7 +22,7 @@ class AccountSerializers(serializers.ModelSerializer):
                  }
             )
 
-        if Account.objects.filter(phone_number=phone_number).first():
+        if UserModel.objects.filter(phone_number=phone_number).first():
             raise ValidationError(
                 {
                     'status': False,
@@ -33,13 +33,25 @@ class AccountSerializers(serializers.ModelSerializer):
         return attrs
 
 
-class PaymentSerializers(serializers.ModelSerializer):
+class ClientSerializers(serializers.ModelSerializer):
     class Meta:
-        model = Payment
+        model = ClientModel
+        fields = '__all__'
+
+
+class MagazineSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = MagazineModel
         fields = '__all__'
 
 
 class OrderSerializers(serializers.ModelSerializer):
     class Meta:
-        model = Order
-        fields = '__all__'   # noqa
+        model = OrderModel
+        fields = '__all__'
+
+
+class PaymentSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = PaymentModel
+        fields = '__all__'

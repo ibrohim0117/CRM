@@ -1,25 +1,44 @@
 from django.shortcuts import render
-from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListCreateAPIView
 
-from app.models import Account, Order, Payment
-from app.serializers import AccountSerializers, OrderSerializers, PaymentSerializers
+from app.models import (
+                        UserModel,
+                        ClientModel,
+                        MagazineModel,
+                        OrderModel,
+                        PaymentModel
+                        )
+from app.serializers import (
+                             UserSerializers,
+                             ClientSerializers,
+                             MagazineSerializers,
+                             OrderSerializers,
+                             PaymentSerializers
+                             )
 
 
-class AccountListView(ListAPIView):
-    queryset = Account.objects.all()
-    serializer_class = AccountSerializers
+class UserListCreateAPIView(ListCreateAPIView):
+    queryset = UserModel.objects.all()
+    serializer_class = UserSerializers
 
 
-class PaymentListView(ListAPIView):
-    queryset = Order.objects.all()
-    serializer_class = PaymentSerializers
+class ClientListCreateAPIView(ListCreateAPIView):
+    queryset = ClientModel.objects.all()
+    serializer_class = ClientSerializers
 
 
-class OrderListView(ListAPIView):
-    queryset = Payment.objects.all()
+class MagazineListCreateAPIView(ListCreateAPIView):
+    queryset = MagazineModel.objects.all()
+    serializer_class = MagazineSerializers
+
+
+class OrderListCreateAPIView(ListCreateAPIView):
+    queryset = OrderModel.objects.all()
     serializer_class = OrderSerializers
 
 
-class AccountCreatView(CreateAPIView):
-    queryset = Account.objects.all()
-    serializer_class = AccountSerializers
+class PaymentListCreateAPIView(ListCreateAPIView):
+    queryset = PaymentModel.objects.all()
+    serializer_class = PaymentSerializers
+
+
