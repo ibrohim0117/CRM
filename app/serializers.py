@@ -5,14 +5,20 @@ from app.models import UserModel, ClientModel, MagazineModel, OrderModel, Paymen
 
 
 class UserSerializers(serializers.ModelSerializer):
+    confirm_password = serializers.CharField(write_only=True, max_length=255)
+
     class Meta:
         model = UserModel
-        fields = '__all__'
+        fields = ['status', 'user', 'full_name', 'phone_number', 'password', 'confirm_password']
+        extra_kwargs = {
+            'password': {'write_only': True}
+        }
 
     def validate(self, attrs):
         full_name = attrs.get('full_name')
         phone_number = attrs.get('phone_number')
-        # print(full_name)
+        confirm_password = (attrs.get('confirm_password'))
+        password = (attrs.get('password'))
         if not full_name.isalpha():
             raise ValidationError(
                 {
@@ -27,6 +33,16 @@ class UserSerializers(serializers.ModelSerializer):
                 {
                     'status': False,
                     'message': "Bu raqam bilan avval ro'yxatdan o'tilgan yangi raqam kiriting!"
+                }
+            )
+
+        if confirm_password == password:
+            attrs.pop('confirm_password')
+        else:
+            raise ValidationError(
+                {
+                    'status': False,
+                    'message': "Invalid password"
                 }
             )
 

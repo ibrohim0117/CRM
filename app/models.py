@@ -11,8 +11,10 @@ class UserModel(models.Model):
     STATUS = (
         (0, 'Debtor'),
         (1, 'Paid'),
+        (3, 'Pending')
     )
 
+    user = models.CharField(max_length=255, choices=ROLE)
     status = models.IntegerField(choices=STATUS)
     full_name = models.CharField(max_length=120)
     phone_number = models.CharField(max_length=13, unique=True)
@@ -58,7 +60,7 @@ class MagazineModel(models.Model):
 
 
 class OrderModel(models.Model):
-    client = models.ForeignKey(UserModel, models.CASCADE)
+    client = models.ForeignKey(ClientModel, models.CASCADE)
     magazine = models.ForeignKey(MagazineModel, models.CASCADE)
     amount = models.FloatField()
     description = models.TextField()
