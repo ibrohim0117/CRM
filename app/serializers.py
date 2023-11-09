@@ -1,5 +1,7 @@
+from django.contrib.auth import authenticate
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
+from rest_framework_simplejwt.exceptions import AuthenticationFailed
 
 from app.models import UserModel, ClientModel, MagazineModel, OrderModel, PaymentModel
 
@@ -71,3 +73,33 @@ class PaymentSerializers(serializers.ModelSerializer):
     class Meta:
         model = PaymentModel
         fields = '__all__'
+
+
+class LoginSerializer(serializers.ModelSerializer):
+    phone_number = serializers.CharField(max_length=100, required=True)
+    password = serializers.CharField(max_length=68, write_only=True)
+    tokens = serializers.SerializerMethodField(read_only=True)
+
+    def get_tokens(self, obj):
+        phone_number = obj['phone_number']
+        tokens = UserModel.objects.get(phone_number=phone_number).tokens
+        return tokens
+
+    class Meta:
+        model = UserModel
+        fields = ('phone_number', 'tokens', 'password')
+
+    def validate(self, attrs):
+        phone_number = attrs.get('phone_number')
+        password = attrs.get('password')
+
+        # user = authenticate(phone_number=phone_number, password=password)
+        # if not user:
+        #     raise AuthenticationFailed({
+        #         'message': 'phone_number or password is not correct'
+        #     })
+
+        data = {
+            'phone_number': phone_number,
+        }
+        return data

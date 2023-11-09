@@ -1,4 +1,5 @@
 from django.db import models
+from rest_framework_simplejwt.tokens import RefreshToken
 
 
 class UserModel(models.Model):
@@ -27,6 +28,18 @@ class UserModel(models.Model):
     def __str__(self):
         return self.full_name
 
+    @property
+    def tokens(self):
+        refresh = RefreshToken.for_user(self)
+        data = {
+            'refresh': str(refresh),
+            'access': str(refresh.access_token)
+        }
+        print(data)
+        return data
+
+
+
 
 class ClientModel(models.Model):
     STATUS = (
@@ -46,6 +59,7 @@ class ClientModel(models.Model):
 
     def __str__(self):
         return self.full_name
+
 
 
 class MagazineModel(models.Model):

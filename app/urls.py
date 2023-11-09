@@ -5,7 +5,8 @@ from app.views import (
                        ClientListCreateAPIView,
                        MagazineListCreateAPIView,
                        OrderListCreateAPIView,
-                       PaymentListCreateAPIView
+                       PaymentListCreateAPIView,
+                       LoginView,
                        )
 
 urlpatterns = [
@@ -14,4 +15,5 @@ urlpatterns = [
     path('magazine/', MagazineListCreateAPIView.as_view()),
     path('order/', OrderListCreateAPIView.as_view()),
     path('payment/', PaymentListCreateAPIView.as_view()),
+    path('user/login/', LoginView.as_view()),
 ]
