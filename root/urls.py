@@ -5,7 +5,6 @@ from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
-...
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -17,14 +16,13 @@ schema_view = get_schema_view(
       license=openapi.License(name="BSD License"),
    ),
    public=True,
-   permission_classes=(permissions.AllowAny,),
+   permission_classes=(permissions.AllowAny, ),
 )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('v1/', include('app.urls')),
-    # path('api-auth/', include('rest_framework.urls')),
-    # path('api/v1/dj_rest_auth/', include('dj_rest_auth.urls'))
+
 ]
 
 urlpatterns += [

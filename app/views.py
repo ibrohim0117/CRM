@@ -2,6 +2,8 @@ from django.shortcuts import render
 from rest_framework.generics import ListCreateAPIView, GenericAPIView
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.views import APIView
+from django.contrib.auth import authenticate
 
 from app.models import (
                         UserModel,
@@ -16,7 +18,6 @@ from app.serializers import (
                              MagazineSerializers,
                              OrderSerializers,
                              PaymentSerializers,
-                             LoginSerializer
                              )
 
 
@@ -50,15 +51,6 @@ class PaymentListCreateAPIView(ListCreateAPIView):
     queryset = PaymentModel.objects.all()
     serializer_class = PaymentSerializers
 
-
-class LoginView(GenericAPIView):
-    # http://127.0.0.1:8000/user/login/
-    serializer_class = LoginSerializer
-
-    def post(self, request):
-        serializer = self.serializer_class(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        return Response({'success': True, 'data': serializer.data}, status=status.HTTP_200_OK)
 
 
 
