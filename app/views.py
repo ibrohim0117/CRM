@@ -1,7 +1,7 @@
 from rest_framework.generics import ListCreateAPIView
-from rest_framework import status
+from rest_framework import status, permissions
 from rest_framework.response import Response
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from rest_framework.views import APIView
 
 from app.models import (
                         CustomUser,
@@ -16,6 +16,7 @@ from app.serializers import (
     MagazineSerializers,
     OrderSerializers,
     PaymentSerializers,
+    GetMeModelSerializers,
 
 )
 
@@ -50,3 +51,13 @@ class OrderListCreateAPIView(ListCreateAPIView):
 class PaymentListCreateAPIView(ListCreateAPIView):
     queryset = PaymentModel.objects.all()
     serializer_class = PaymentSerializers
+
+
+class GetMeUserApiView(APIView):
+    permission_classes = (permissions.IsAuthenticated, )
+
+    def get(self, request, pk=None, *args, **kwargs):
+        user = request.user
+        serializer_data = GetMeModelSerializers(user).data
+        print(serializer_data)
+        return Response(serializer_data)

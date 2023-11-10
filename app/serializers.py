@@ -68,3 +68,9 @@ class PaymentSerializers(serializers.ModelSerializer):
     class Meta:
         model = PaymentModel
         fields = '__all__'
+
+
+class GetMeModelSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['full_name', 'phone_number', 'status']
