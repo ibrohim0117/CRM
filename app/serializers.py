@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate
+from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from rest_framework_simplejwt.exceptions import AuthenticationFailed
@@ -22,7 +23,7 @@ class UserSerializers(serializers.ModelSerializer):
 
     def validate_status(self, value):
         # Ma'lumot holati uchun to'g'ri qiymatlarini tekshirish
-        if value not in [0, 1, 3]:
+        if value not in [0, 1, 2]:
             raise serializers.ValidationError("Noto'g'ri ma'lumot holati.")
         return value
 
@@ -33,6 +34,7 @@ class UserSerializers(serializers.ModelSerializer):
 
         if confirm_password == password:
             attrs.pop('confirm_password')
+            attrs['password'] = make_password(password)
         else:
             raise ValidationError(
                 {
@@ -40,7 +42,7 @@ class UserSerializers(serializers.ModelSerializer):
                     'message': "Invalid password"
                 }
             )
-
+        print(attrs)
         return attrs
 
 

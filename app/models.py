@@ -23,9 +23,10 @@ class CustomUser(AbstractUser, PermissionsMixin):
     STATUS_CHOICES = (
         (0, 'Debtor'),
         (1, 'Paid'),
-        (3, 'Pending')
+        (2, 'Pending')
     )
     full_name = models.CharField(max_length=25)
+    username = models.CharField(max_length=25, blank=True, null=True)
     phone_number = models.CharField(max_length=15, unique=True)
     status = models.IntegerField(choices=STATUS_CHOICES, default=3)
     created_at = models.DateTimeField(auto_now_add=True)

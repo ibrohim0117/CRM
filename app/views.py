@@ -1,10 +1,6 @@
-from django.shortcuts import render
-from rest_framework.generics import ListCreateAPIView, GenericAPIView
+from rest_framework.generics import ListCreateAPIView
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.views import APIView
-from django.contrib.auth import authenticate
-from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from app.models import (
@@ -22,14 +18,6 @@ from app.serializers import (
     PaymentSerializers,
 
 )
-
-
-class UserLoginView(TokenObtainPairView):
-    serializer_class = UserSerializers
-
-
-class TokenRefreshCustomView(TokenRefreshView):
-    serializer_class = UserSerializers
 
 
 class UserListCreateAPIView(ListCreateAPIView):
