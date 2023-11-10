@@ -6,14 +6,10 @@ from app.views import (
     MagazineListCreateAPIView,
     OrderListCreateAPIView,
     PaymentListCreateAPIView,
+    UserLoginView,
+    TokenRefreshCustomView,
 )
 
-from rest_framework_simplejwt.views import (
-   TokenObtainPairView,
-   TokenRefreshView,
-)
-
-...
 
 urlpatterns = [
     path('user/', UserListCreateAPIView.as_view()),
@@ -21,6 +17,6 @@ urlpatterns = [
     path('magazine/', MagazineListCreateAPIView.as_view()),
     path('order/', OrderListCreateAPIView.as_view()),
     path('payment/', PaymentListCreateAPIView.as_view()),
-    path('/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('signin/', UserLoginView.as_view(), name='login'),
+    path('token/refresh/', TokenRefreshCustomView.as_view(), name='token_refresh'),
 ]

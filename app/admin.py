@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import (
-    UserModel,
+    CustomUser,
     ClientModel,
     MagazineModel,
     OrderModel,
@@ -8,7 +8,7 @@ from .models import (
 )
 
 
-admin.site.register(UserModel)
+admin.site.register(CustomUser)
 admin.site.register(ClientModel)
 admin.site.register(MagazineModel)
 admin.site.register(OrderModel)
