@@ -16,12 +16,14 @@ schema_view = get_schema_view(
       license=openapi.License(name="BSD License"),
    ),
    public=True,
-   permission_classes=(permissions.AllowAny, ),
+   permission_classes=(permissions.AllowAny, ),  # noqa
 )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('v1/', include('app.urls')),
+    path('v1/customer/', include('customer.urls')),
+    path('v1/order/', include('order.urls')),
+    path('v1/payment/', include('payment.urls')),
 
 ]
 

@@ -1,10 +1,8 @@
-from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
-from rest_framework_simplejwt.exceptions import AuthenticationFailed
 
-from app.models import CustomUser, ClientModel, MagazineModel, OrderModel, PaymentModel
+from .models import CustomUser, MagazineModel, ClientModel
 
 
 class UserSerializers(serializers.ModelSerializer):
@@ -46,6 +44,12 @@ class UserSerializers(serializers.ModelSerializer):
         return attrs
 
 
+class GetMeModelSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['full_name', 'phone_number', 'status']
+
+
 class ClientSerializers(serializers.ModelSerializer):
     class Meta:
         model = ClientModel
@@ -56,21 +60,3 @@ class MagazineSerializers(serializers.ModelSerializer):
     class Meta:
         model = MagazineModel
         fields = '__all__'
-
-
-class OrderSerializers(serializers.ModelSerializer):
-    class Meta:
-        model = OrderModel
-        fields = '__all__'
-
-
-class PaymentSerializers(serializers.ModelSerializer):
-    class Meta:
-        model = PaymentModel
-        fields = '__all__'
-
-
-class GetMeModelSerializers(serializers.ModelSerializer):
-    class Meta:
-        model = CustomUser
-        fields = ['full_name', 'phone_number', 'status']

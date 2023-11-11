@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # my_apps
-    'app',
+    'customer',
+    'order',
+    'payment',
 
     # install apps
     'rest_framework',
