@@ -8,6 +8,7 @@ from customer.models import (
                                 MagazineModel,
                                 ClientModel
                             )
+from customer.permissions import IsAuthenticatedOrReadOnly
 from customer.serializers import (
                                  UserSerializers,
                                  GetMeModelSerializers,
@@ -19,7 +20,7 @@ from customer.serializers import (
 class UserListCreateAPIView(ListCreateAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializers
-    permission_classes = (permissions.IsAuthenticated, )
+    permission_classes = (IsAuthenticatedOrReadOnly, )
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -42,8 +43,10 @@ class GetMeUserApiView(APIView):
 class ClientListCreateAPIView(ListCreateAPIView):
     queryset = ClientModel.objects.all()
     serializer_class = ClientSerializers
+    permission_classes = (permissions.IsAuthenticated, )
 
 
 class MagazineListCreateAPIView(ListCreateAPIView):
     queryset = MagazineModel.objects.all()
     serializer_class = MagazineSerializers
+    permission_classes = (permissions.IsAuthenticated, )

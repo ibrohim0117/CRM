@@ -60,7 +60,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'root.urls'
 
-AUTH_USER_MODEL = 'app.CustomUser'
+AUTH_USER_MODEL = 'customer.CustomUser'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -156,7 +156,6 @@ SWAGGER_SETTINGS = {
       }
    }
 }
-
 
 
 REST_FRAMEWORK = {

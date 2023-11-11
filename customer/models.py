@@ -38,17 +38,17 @@ class CustomUser(AbstractUser, PermissionsMixin):
     REQUIRED_FIELDS = []
 
     def __str__(self):
-        return self.phone_number
+        return f"{self.full_name} --> {self.phone_number}"
 
 
 class ClientModel(models.Model):
     STATUS_CHOICES = (
         (0, 'Debtor'),
         (1, 'Paid'),
-        (3, 'Pending')
+        (2, 'Pending')
     )
 
-    customer = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    customer = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     status = models.IntegerField(choices=STATUS_CHOICES)
     full_name = models.CharField(max_length=120)
     phone_number1 = models.CharField(max_length=13, unique=True)

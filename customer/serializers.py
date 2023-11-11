@@ -2,6 +2,7 @@ from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
+from utility.validation_phone import validate_phone_number
 from .models import CustomUser, MagazineModel, ClientModel
 
 
@@ -15,7 +16,7 @@ class UserSerializers(serializers.ModelSerializer):
 
     def validate_phone_number(self, value):
         # Telefon raqami formatini tekshirish uchun
-        if not value.isdigit():
+        if not validate_phone_number(value):
             raise serializers.ValidationError("Telefon raqami faqat raqamlardan iborat bo'lishi kerak.")
         return value
 
