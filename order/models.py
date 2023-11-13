@@ -1,6 +1,7 @@
 from django.db import models
 
-from customer.models import ClientModel, MagazineModel
+from customer.models import ClientModel
+from magazine.models import MagazineModel
 
 
 class OrderModel(models.Model):

@@ -1,19 +1,16 @@
 from rest_framework import permissions, status
-from rest_framework.generics import ListCreateAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from customer.models import (
                                 CustomUser,
-                                MagazineModel,
                                 ClientModel
                             )
 from customer.permissions import IsAuthenticatedOrReadOnly
 from customer.serializers import (
     UserSerializers,
     GetMeModelSerializers,
-    MagazineCreateSerializers,
-    MagazineListSerializers,
     ClientSerializers,
 )
 
@@ -29,6 +26,12 @@ class UserListCreateAPIView(ListCreateAPIView):
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+
+class UserRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = UserSerializers
+    permission_classes = (permissions.IsAuthenticated, )
 
 
 class GetMeUserApiView(APIView):
@@ -57,23 +60,7 @@ class ClientListCreateAPIView(ListCreateAPIView):
         serializer.save(customer=user)
 
 
-class MagazineListCreateAPIView(ListCreateAPIView):
-    queryset = MagazineModel.objects.all()
-    permission_classes = (permissions.IsAuthenticated, )
 
-    def get_serializer_class(self):
-        if self.request.method == 'POST':
-            return MagazineCreateSerializers
 
-        elif self.request.method == 'GET':
-            return MagazineListSerializers
 
-    # faqt o'zi qo'shgan magazinlar ro'yxatini oladi
-    def get_queryset(self):
-        user = self.request.user
-        return MagazineModel.objects.filter(owner=user)
-
-    def perform_create(self, serializer):
-        user = self.request.user
-        serializer.save(owner=user)
 

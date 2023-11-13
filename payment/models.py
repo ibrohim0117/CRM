@@ -1,6 +1,7 @@
 from django.db import models
 
-from customer.models import CustomUser, MagazineModel
+from customer.models import CustomUser
+from magazine.models import MagazineModel
 
 
 class PaymentModel(models.Model):

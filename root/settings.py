@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'customer',
     'order',
     'payment',
+    'magazine',
 
     # install apps
     'rest_framework',

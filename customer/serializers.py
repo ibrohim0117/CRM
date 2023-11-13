@@ -3,7 +3,7 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
 from utility.validation_phone import validate_phone_number
-from .models import CustomUser, MagazineModel, ClientModel
+from .models import CustomUser, ClientModel
 
 
 class UserSerializers(serializers.ModelSerializer):
@@ -55,15 +55,3 @@ class ClientSerializers(serializers.ModelSerializer):
     class Meta:
         model = ClientModel
         fields = ['status', 'full_name', 'phone_number1', 'phone_number2', 'debt_amount']
-
-
-class MagazineCreateSerializers(serializers.ModelSerializer):
-    class Meta:
-        model = MagazineModel
-        fields = ('name', )
-
-
-class MagazineListSerializers(serializers.ModelSerializer):
-    class Meta:
-        model = MagazineModel
-        fields = '__all__'
