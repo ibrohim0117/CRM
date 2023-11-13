@@ -57,7 +57,13 @@ class ClientSerializers(serializers.ModelSerializer):
         fields = ['status', 'full_name', 'phone_number1', 'phone_number2', 'debt_amount']
 
 
-class MagazineSerializers(serializers.ModelSerializer):
+class MagazineCreateSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = MagazineModel
+        fields = ('name', )
+
+
+class MagazineListSerializers(serializers.ModelSerializer):
     class Meta:
         model = MagazineModel
         fields = '__all__'

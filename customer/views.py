@@ -10,11 +10,12 @@ from customer.models import (
                             )
 from customer.permissions import IsAuthenticatedOrReadOnly
 from customer.serializers import (
-                                 UserSerializers,
-                                 GetMeModelSerializers,
-                                 MagazineSerializers,
-                                 ClientSerializers
-                                 )
+    UserSerializers,
+    GetMeModelSerializers,
+    MagazineCreateSerializers,
+    MagazineListSerializers,
+    ClientSerializers,
+)
 
 
 class UserListCreateAPIView(ListCreateAPIView):
@@ -45,6 +46,7 @@ class ClientListCreateAPIView(ListCreateAPIView):
     serializer_class = ClientSerializers
     permission_classes = (permissions.IsAuthenticated, )
 
+    # faqt o'zi qo'shgan qarzdorlar ro'yxatini oladi
     def get_queryset(self):
         user = self.request.user
         # print(user)
@@ -57,5 +59,21 @@ class ClientListCreateAPIView(ListCreateAPIView):
 
 class MagazineListCreateAPIView(ListCreateAPIView):
     queryset = MagazineModel.objects.all()
-    serializer_class = MagazineSerializers
     permission_classes = (permissions.IsAuthenticated, )
+
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return MagazineCreateSerializers
+
+        elif self.request.method == 'GET':
+            return MagazineListSerializers
+
+    # faqt o'zi qo'shgan magazinlar ro'yxatini oladi
+    def get_queryset(self):
+        user = self.request.user
+        return MagazineModel.objects.filter(owner=user)
+
+    def perform_create(self, serializer):
+        user = self.request.user
+        serializer.save(owner=user)
+
