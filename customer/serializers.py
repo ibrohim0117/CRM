@@ -48,7 +48,7 @@ class UserSerializers(serializers.ModelSerializer):
 class GetMeModelSerializers(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['full_name', 'phone_number', 'status']
+        fields = ['id', 'full_name', 'phone_number', 'status']
 
 
 class ClientSerializers(serializers.ModelSerializer):

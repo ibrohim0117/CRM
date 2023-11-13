@@ -36,7 +36,7 @@ class GetMeUserApiView(APIView):
     def get(self, request, pk=None, *args, **kwargs):
         user = request.user
         serializer_data = GetMeModelSerializers(user).data
-        print(serializer_data)
+        # print(serializer_data)
         return Response(serializer_data)
 
 
