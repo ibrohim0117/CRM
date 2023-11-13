@@ -45,6 +45,15 @@ class ClientListCreateAPIView(ListCreateAPIView):
     serializer_class = ClientSerializers
     permission_classes = (permissions.IsAuthenticated, )
 
+    def get_queryset(self):
+        user = self.request.user
+        # print(user)
+        return ClientModel.objects.filter(customer=user)
+
+    def perform_create(self, serializer):
+        user = self.request.user
+        serializer.save(customer=user)
+
 
 class MagazineListCreateAPIView(ListCreateAPIView):
     queryset = MagazineModel.objects.all()

@@ -41,7 +41,7 @@ class UserSerializers(serializers.ModelSerializer):
                     'message': "Invalid password"
                 }
             )
-        print(attrs)
+        # print(attrs)
         return attrs
 
 
@@ -54,7 +54,7 @@ class GetMeModelSerializers(serializers.ModelSerializer):
 class ClientSerializers(serializers.ModelSerializer):
     class Meta:
         model = ClientModel
-        fields = '__all__'
+        fields = ['status', 'full_name', 'phone_number1', 'phone_number2', 'debt_amount']
 
 
 class MagazineSerializers(serializers.ModelSerializer):
