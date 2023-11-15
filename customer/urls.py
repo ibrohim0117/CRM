@@ -4,8 +4,8 @@ from .views import (
     UserListCreateAPIView,
     GetMeUserApiView,
     ClientListCreateAPIView,
-    # CustomChangePasswordView,
     CustomerRetrieveUpdateDestroyAPIView,
+    ClientRetrieveUpdateDestroyAPIView,
 )
 
 from rest_framework_simplejwt.views import (
@@ -22,4 +22,5 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('get-me', GetMeUserApiView.as_view(), name='get_me'),
     path('client/', ClientListCreateAPIView.as_view()),
+    path('client/<int:pk>/', ClientRetrieveUpdateDestroyAPIView.as_view()),
 ]

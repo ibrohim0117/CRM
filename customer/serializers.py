@@ -57,7 +57,13 @@ class GetMeModelSerializers(serializers.ModelSerializer):
         fields = ['id', 'full_name', 'phone_number', 'status']
 
 
-class ClientSerializers(serializers.ModelSerializer):
+class ClientCreatSerializers(serializers.ModelSerializer):
     class Meta:
         model = ClientModel
         fields = ['status', 'full_name', 'phone_number1', 'phone_number2', 'debt_amount']
+
+
+class ClientListSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = ClientModel
+        fields = ['status', 'full_name', 'phone_number1', 'phone_number2', 'debt_amount', 'customer']

@@ -11,7 +11,8 @@ from customer.permissions import IsAuthenticatedOrReadOnly, IsOwnerOrSuperuserOr
 from customer.serializers import (
     UserSerializers,
     GetMeModelSerializers,
-    ClientSerializers,
+    ClientCreatSerializers,
+    ClientListSerializers,
     CustomerUpdateSerializer,
     # CustomPasswordChangeSerializer,
 )
@@ -47,7 +48,7 @@ class GetMeUserApiView(APIView):
 
 class ClientListCreateAPIView(ListCreateAPIView):
     queryset = ClientModel.objects.all()
-    serializer_class = ClientSerializers
+    serializer_class = ClientCreatSerializers
     permission_classes = (permissions.IsAuthenticated, )
 
     # faqt o'zi qo'shgan qarzdorlar ro'yxatini oladi
@@ -60,8 +61,18 @@ class ClientListCreateAPIView(ListCreateAPIView):
         user = self.request.user
         serializer.save(customer=user)
 
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return ClientCreatSerializers
+
+        elif self.request.method == 'GET':
+            return ClientListSerializers
 
 
+class ClientRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
+    queryset = ClientModel
+    serializer_class = ClientCreatSerializers
+    permission_classes = (permissions.IsAuthenticated, )
 
 
 
