@@ -45,21 +45,10 @@ class UserSerializers(serializers.ModelSerializer):
         return attrs
 
 
-# class CustomPasswordChangeSerializer(serializers.Serializer):   # noqa
-#     old_password = serializers.CharField(required=True)
-#     new_password = serializers.CharField(required=True)
-#
-#     def validate_old_password(self, value):
-#         user = self.context['request'].user
-#         print(user, 'serializer')
-#         if not user.check_password(value):
-#             raise serializers.ValidationError("Old password is incorrect.")
-#         return value
-#
-#     def validate_new_password(self, value):   # noqa
-#         # Iltimos, yangi parolingizni tekshirish uchun o'zingizning talablarizni qo'shing
-#         # Masalan: 8 belgidan ko'p, katta va kichik harf, raqam, xususiy belgilar, kabi.
-#         return value
+class CustomerUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ('full_name', 'phone_num' 'phone_number')
 
 
 class GetMeModelSerializers(serializers.ModelSerializer):
