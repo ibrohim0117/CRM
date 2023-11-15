@@ -1,5 +1,5 @@
 from rest_framework import permissions, status
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, CreateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -12,6 +12,7 @@ from customer.serializers import (
     UserSerializers,
     GetMeModelSerializers,
     ClientSerializers,
+    # CustomPasswordChangeSerializer,
 )
 
 
@@ -32,6 +33,36 @@ class UserRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializers
     permission_classes = (permissions.IsAuthenticated, )
+
+
+# class CustomChangePasswordView(CreateAPIView):
+#     queryset = CustomUser.objects.all()
+#     serializer_class = CustomPasswordChangeSerializer
+#     permission_classes = [permissions.IsAuthenticated, ]
+
+    def create(self, request, *args, **kwargs):
+        user = self.request.user
+        print(user, 'view')
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        # old_password = serializer.validated_data.get('old_password')
+        # new_password = serializer.validated_data.get('new_password')
+
+        # if not user.cheak_password(old_password):
+        #     msg = {
+        #         "status": False,
+        #         "message": 'Old password invalid!'
+        #            }
+        #     return Response(msg)
+        # else:
+        #     user.set_password(new_password)
+        #     user.save()
+        #     msg = {
+        #         "status": True,
+        #         "message": 'Password updated successfully!'
+        #     }
+        #     return Response(msg)
 
 
 class GetMeUserApiView(APIView):
