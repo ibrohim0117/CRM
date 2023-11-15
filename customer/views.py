@@ -7,14 +7,17 @@ from customer.models import (
                                 CustomUser,
                                 ClientModel
                             )
-from customer.permissions import IsAuthenticatedOrReadOnly, IsOwnerOrSuperuserOrAuthenticatedOrReadOnly
+from customer.permissions import (
+    IsAuthenticatedOrReadOnly,
+    IsOwnerOrSuperuserOrAuthenticatedOrReadOnly,
+    IsClintOwnerAuthenticatedOrReadOnly
+)
 from customer.serializers import (
     UserSerializers,
     GetMeModelSerializers,
     ClientCreatSerializers,
     ClientListSerializers,
     CustomerUpdateSerializer,
-    # CustomPasswordChangeSerializer,
 )
 
 
@@ -72,7 +75,7 @@ class ClientListCreateAPIView(ListCreateAPIView):
 class ClientRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     queryset = ClientModel
     serializer_class = ClientCreatSerializers
-    permission_classes = (permissions.IsAuthenticated, )
+    permission_classes = (IsClintOwnerAuthenticatedOrReadOnly, )
 
 
 

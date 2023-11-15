@@ -18,3 +18,10 @@ class IsOwnerOrSuperuserOrAuthenticatedOrReadOnly(BasePermission):
         user = request.user
         return user.id == obj.id or user.is_superuser
 
+
+class IsClintOwnerAuthenticatedOrReadOnly(BasePermission):
+    def has_object_permission(self, request, view, obj):
+        clint = obj.customer.id
+        owner = request.user.id
+        return (clint == owner or request.user.is_superuser) and request.user.is_authenticated
+
