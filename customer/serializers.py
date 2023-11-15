@@ -48,7 +48,7 @@ class UserSerializers(serializers.ModelSerializer):
 class CustomerUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ('full_name', 'phone_num' 'phone_number')
+        fields = ('full_name', 'phone_number')
 
 
 class GetMeModelSerializers(serializers.ModelSerializer):

@@ -7,7 +7,7 @@ from customer.models import (
                                 CustomUser,
                                 ClientModel
                             )
-from customer.permissions import IsAuthenticatedOrReadOnly
+from customer.permissions import IsAuthenticatedOrReadOnly, IsOwnerOrSuperuserOrAuthenticatedOrReadOnly
 from customer.serializers import (
     UserSerializers,
     GetMeModelSerializers,
@@ -33,7 +33,7 @@ class UserListCreateAPIView(ListCreateAPIView):
 class CustomerRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = CustomerUpdateSerializer
-    permission_classes = (permissions.IsAuthenticated, )
+    permission_classes = (IsOwnerOrSuperuserOrAuthenticatedOrReadOnly, )
 
 
 class GetMeUserApiView(APIView):
@@ -42,7 +42,6 @@ class GetMeUserApiView(APIView):
     def get(self, request, pk=None, *args, **kwargs):
         user = request.user
         serializer_data = GetMeModelSerializers(user).data
-        # print(serializer_data)
         return Response(serializer_data)
 
 
