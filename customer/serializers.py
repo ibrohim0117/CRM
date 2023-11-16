@@ -66,4 +66,4 @@ class ClientCreatSerializers(serializers.ModelSerializer):
 class ClientListSerializers(serializers.ModelSerializer):
     class Meta:
         model = ClientModel
-        fields = ['status', 'full_name', 'phone_number1', 'phone_number2', 'debt_amount', 'customer']
+        fields = ['id', 'status', 'full_name', 'phone_number1', 'phone_number2', 'debt_amount', 'customer']
