@@ -3,6 +3,7 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIV
 from customer import permissions
 from magazine.models import MagazineModel
 from order.models import OrderModel
+from order.permissions import IsOrderOwnerAuthenticatedOrReadOnly
 from order.serializers import OrderSerializers
 
 
@@ -20,7 +21,7 @@ class OrderListCreateAPIView(ListCreateAPIView):
 class OrderRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     queryset = OrderModel.objects.all()
     serializer_class = OrderSerializers
-    permission_classes = (permissions.IsAuthenticated, )
+    permission_classes = (IsOrderOwnerAuthenticatedOrReadOnly, )
 
 
 

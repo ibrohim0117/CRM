@@ -1,5 +1,12 @@
 from rest_framework import permissions, status
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, CreateAPIView, RetrieveAPIView
+from rest_framework.generics import (
+    ListCreateAPIView,
+    RetrieveUpdateDestroyAPIView,
+    CreateAPIView,
+    RetrieveAPIView,
+    ListAPIView,
+    DestroyAPIView
+)
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -17,8 +24,10 @@ from customer.serializers import (
     GetMeModelSerializers,
     ClientCreatSerializers,
     ClientListSerializers,
-    CustomerUpdateSerializer,
+    CustomerUpdateSerializer, ClintOrderListSerializer,
 )
+from order.models import OrderModel
+from order.serializers import OrderSerializers
 
 
 class UserListCreateAPIView(ListCreateAPIView):
@@ -77,5 +86,30 @@ class ClientRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = ClientCreatSerializers
     permission_classes = (IsClintOwnerAuthenticatedOrReadOnly, )
 
+
+class ClientOrdersListView(RetrieveAPIView):
+    queryset = ClientModel.objects.all()
+    serializer_class = ClientCreatSerializers
+    # permission_classes = (IsClintOwnerAuthenticatedOrReadOnly, )
+
+    def retrieve(self, request, *args, **kwargs):
+        # Obyekt ma'lumotlarini olish
+        instance = self.get_object()
+
+        # Clintga oid ma'lumotlar
+        client_serializer = self.get_serializer(instance)
+        client_data = client_serializer.data
+
+        # Clintga oid OrderModel obyektlarini olish
+        orders = OrderModel.objects.filter(client=instance)
+        order_serializer = OrderSerializers(orders, many=True)
+        orders_data = order_serializer.data
+
+        data = {
+            'client_info': client_data,
+            'orders': orders_data
+        }
+
+        return Response(data)
 
 

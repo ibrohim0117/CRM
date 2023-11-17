@@ -2,6 +2,7 @@ from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
+from order.models import OrderModel
 from utility.validation_phone import validate_phone_number
 from .models import CustomUser, ClientModel
 
@@ -67,3 +68,9 @@ class ClientListSerializers(serializers.ModelSerializer):
     class Meta:
         model = ClientModel
         fields = ['id', 'status', 'full_name', 'phone_number1', 'phone_number2', 'debt_amount', 'customer']
+
+
+class ClintOrderListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrderModel
+        fields = '__all__'
