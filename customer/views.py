@@ -20,11 +20,13 @@ from customer.permissions import (
     IsClintOwnerAuthenticatedOrReadOnly
 )
 from customer.serializers import (
-    UserSerializers,
+    CustomerCreateSerializers,
     GetMeModelSerializers,
     ClientCreatSerializers,
     ClientListSerializers,
-    CustomerUpdateSerializer, ClintOrderListSerializer,
+    CustomerUpdateSerializer,
+    ClintOrderListSerializer,
+    CustomerListSerializers,
 )
 from order.models import OrderModel
 from order.serializers import OrderSerializers
@@ -32,7 +34,7 @@ from order.serializers import OrderSerializers
 
 class UserListCreateAPIView(ListCreateAPIView):
     queryset = CustomUser.objects.all()
-    serializer_class = UserSerializers
+    serializer_class = CustomerCreateSerializers
     permission_classes = (IsAuthenticatedOrReadOnly, )
 
     def create(self, request, *args, **kwargs):
@@ -41,6 +43,12 @@ class UserListCreateAPIView(ListCreateAPIView):
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return CustomerCreateSerializers
+        elif self.request.method == 'GET':
+            return CustomerListSerializers
 
 
 class CustomerRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
@@ -89,8 +97,8 @@ class ClientRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
 
 class ClientOrdersListView(RetrieveAPIView):
     queryset = ClientModel.objects.all()
-    serializer_class = ClientCreatSerializers
-    # permission_classes = (IsClintOwnerAuthenticatedOrReadOnly, )
+    serializer_class = ClientListSerializers
+    permission_classes = (IsClintOwnerAuthenticatedOrReadOnly, )
 
     def retrieve(self, request, *args, **kwargs):
         # Obyekt ma'lumotlarini olish

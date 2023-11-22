@@ -7,7 +7,7 @@ from utility.validation_phone import validate_phone_number
 from .models import CustomUser, ClientModel
 
 
-class UserSerializers(serializers.ModelSerializer):
+class CustomerCreateSerializers(serializers.ModelSerializer):
     confirm_password = serializers.CharField(write_only=True, max_length=255)
 
     class Meta:
@@ -44,6 +44,12 @@ class UserSerializers(serializers.ModelSerializer):
             )
         # print(attrs)
         return attrs
+
+
+class CustomerListSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['id', 'full_name', 'phone_number', 'status']
 
 
 class CustomerUpdateSerializer(serializers.ModelSerializer):

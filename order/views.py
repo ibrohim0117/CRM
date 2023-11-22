@@ -1,7 +1,6 @@
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
 from customer import permissions
-from magazine.models import MagazineModel
 from order.models import OrderModel
 from order.permissions import IsOrderOwnerAuthenticatedOrReadOnly
 from order.serializers import OrderSerializers
