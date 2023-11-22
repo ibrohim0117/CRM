@@ -18,7 +18,7 @@ class UserSerializers(serializers.ModelSerializer):
     def validate_phone_number(self, value):
         # Telefon raqami formatini tekshirish uchun
         if not validate_phone_number(value):
-            raise serializers.ValidationError("Telefon raqami faqat raqamlardan iborat bo'lishi kerak.")
+            raise serializers.ValidationError("Telefon raqamda xatolik bor.")
         return value
 
     def validate_status(self, value):
@@ -61,7 +61,19 @@ class GetMeModelSerializers(serializers.ModelSerializer):
 class ClientCreatSerializers(serializers.ModelSerializer):
     class Meta:
         model = ClientModel
-        fields = ['status', 'full_name', 'phone_number1', 'phone_number2', 'debt_amount']
+        fields = ['status', 'full_name', 'phone_number1']
+
+    def validate_phone_number1(self, value):
+        # Telefon raqami formatini tekshirish uchun
+        if not validate_phone_number(value):
+            raise serializers.ValidationError("Telefon raqamda xatolik bor.")
+        return value
+
+    def validate_status(self, value):
+        # Ma'lumot holati uchun to'g'ri qiymatlarini tekshirish
+        if value not in [0, 1, 2]:
+            raise serializers.ValidationError("Noto'g'ri ma'lumot holati.")
+        return value
 
 
 class ClientListSerializers(serializers.ModelSerializer):

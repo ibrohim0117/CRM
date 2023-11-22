@@ -28,7 +28,7 @@ class CustomUser(AbstractUser, PermissionsMixin):
     full_name = models.CharField(max_length=25)
     username = models.CharField(max_length=25, blank=True, null=True)
     phone_number = models.CharField(max_length=15, unique=True)
-    status = models.IntegerField(choices=STATUS_CHOICES, default=3)
+    status = models.IntegerField(choices=STATUS_CHOICES, default=2)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -49,7 +49,7 @@ class ClientModel(models.Model):
     )
 
     customer = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    status = models.IntegerField(choices=STATUS_CHOICES)
+    status = models.IntegerField(choices=STATUS_CHOICES, default=2)
     full_name = models.CharField(max_length=120)
     phone_number1 = models.CharField(max_length=13, unique=True)
     phone_number2 = models.CharField(max_length=13, blank=True, null=True)

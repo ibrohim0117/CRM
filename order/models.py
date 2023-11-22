@@ -16,3 +16,10 @@ class OrderModel(models.Model):
 
     def __str__(self):
         return f"{self.description} --> {self.client.full_name} --> {self.magazine.name}"
+
+    def save(self, *args, **kwargs):
+        client = self.client
+        client.debt_amount += self.amount
+        client.save()
+        super().save(*args, **kwargs)
+
