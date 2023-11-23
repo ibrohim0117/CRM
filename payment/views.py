@@ -16,7 +16,8 @@ class PaymentListCreateAPIView(ListCreateAPIView):
         # Foydalanuvchi (customer) ID sini olish
         customer_id = self.request.user.id
         print(customer_id)
-        return PaymentModel.objects.filter(client__customer_id=customer_id)
+        print(self.request.data)
+        return PaymentModel.objects.all()
 
 
 class PaymentRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):

@@ -7,6 +7,7 @@ from .views import (
     CustomerRetrieveUpdateDestroyAPIView,
     ClientRetrieveUpdateDestroyAPIView,
     ClientOrdersListView,
+    ClientPaymentList,
 )
 
 from rest_framework_simplejwt.views import (
@@ -25,4 +26,5 @@ urlpatterns = [
     path('client/', ClientListCreateAPIView.as_view()),
     path('client/<int:pk>/', ClientRetrieveUpdateDestroyAPIView.as_view()),
     path('client/order_list/<int:pk>/', ClientOrdersListView.as_view()),
+    path('client/payment_list/<int:pk>/', ClientPaymentList.as_view()),
 ]

@@ -30,6 +30,8 @@ from customer.serializers import (
 )
 from order.models import OrderModel
 from order.serializers import OrderSerializers
+from payment.models import PaymentModel
+from payment.serializers import PaymentSerializers
 
 
 class UserListCreateAPIView(ListCreateAPIView):
@@ -119,5 +121,29 @@ class ClientOrdersListView(RetrieveAPIView):
         }
 
         return Response(data)
+
+
+class ClientPaymentList(RetrieveAPIView):
+    queryset = ClientModel.objects.all()
+    serializer_class = ClientListSerializers
+    permission_classes = (IsClintOwnerAuthenticatedOrReadOnly, )
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+
+        client_serializer = self.get_serializer(instance)
+        client_data = client_serializer.data
+
+        payment = PaymentModel.objects.filter(client=instance)
+        payment_serializer = PaymentSerializers(payment, many=True)
+        payments_data = payment_serializer.data
+
+        data = {
+            'client_info': client_data,
+            'payments': payments_data
+        }
+
+        return Response(data)
+
 
 
