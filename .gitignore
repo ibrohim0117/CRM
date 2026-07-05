@@ -226,4 +226,11 @@ dmypy.json
 cython_debug/
 
 **/migrations
-**/migrations/
+**/migrations/*.pyc
+*.pyo
+.venv/
+*.sqlite3
+*.db
+*.session
+.DS_Store
+media/
